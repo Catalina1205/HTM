@@ -1,0 +1,75 @@
+{%  include 'Inc/header2.html'   %}
+{% load static  %}
+
+<div class="ui container" style="background-color: white"> 
+
+    <br>
+    <div>
+        <button style="cursor: default;" class="ui teal button" id="boton_permisos">Incapacidades</button>
+    </div>
+
+    <br><br>
+    <div style="text-align:center; margin-left: 7%; margin-right:7%">
+
+        <h5>Realizar solicitud</h5>
+        <br>
+        <div class="ui container">
+            
+            <form class= "ui form" action="" method="POST" enctype="multipart/form-data">
+            
+                {% csrf_token %}
+            
+                <div class="two fields">
+                    <div class="field">
+                        <label><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Tipo de incapacidad</font></font></label>
+                        <select name="tipodeincapacidad_id" id="tipodeincapacidad_id" class="ui search dropdown">
+                            {% for t in tipos %}
+                                <option value="{{t.id}}">{{t.nombre}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label>Número de Incapacidad</label>
+                        <input type="text" name="numeroIncapacidad">
+                    </div>
+                </div>
+            
+           
+                <div class="two fields">
+                    <div class="field">
+                        <label>Desde</label>
+                        <input type="date" placeholder="First Name" name="fechaInicio">
+                    </div>
+                    <div class="field">
+                        <label>Hasta</label>
+                        <input type="date" placeholder="Middle Name" name="fechaFin"  >
+                    </div>
+                </div>
+            
+            
+                
+                <div class="one fields">
+                    <div class="field">
+                      <label for="">Archivos adjuntos</label> <br>
+                      <p style="font-size: 14px" >A continuación adjunte los archivos que sustenta el permiso solicitado.</p>
+                      <input type="file" name="certificadoIncapacidad" id="">
+                    </div>
+                </div>
+
+                <br><br>
+            
+                <button class="ui grey circular button">
+                    <i class="paper plane icon"></i>
+                    Enviar
+                </button>
+            
+            </form>
+            
+            
+      
+
+    </div>
+</div>
+
+
+{%  include 'Inc/pie2.html'  %}

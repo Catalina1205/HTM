@@ -1,0 +1,83 @@
+{% include 'Inc/header2.html' %}
+{% load static %}
+
+
+<div class="ui container" style="background-color: white"> 
+
+    <br>
+    <div>
+        <button style="cursor: default;" class="ui teal button" id="boton_permisos">Traslado de EPS</button>
+    </div>
+
+    <br><br>
+    <div style="text-align:center; margin-left: 7%; margin-right:7%">
+
+        <h5>Realizar solicitud</h5>
+        <br>
+        <div class="ui container">
+           
+            <form class= "ui form" action="" method="POST" enctype="multipart/form-data">
+            
+                {% csrf_token %}
+
+                   <div class="two fields">
+
+                        <div class="field">
+                            <label><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">EPS actual</font></font></label>
+                            <select name="epsactual_id" id="epsactual_id" class="ui search dropdown">
+                                {% for e in epss %}
+                                    <option value="{{e.id}}">{{e.nombre}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="field">
+                            <label><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">EPS nueva</font></font></label>
+                            <select name="epsnueva_id" id="epsnueva_id" class="ui search dropdown">
+                                {% for p in epss %}
+                                    <option value="{{p.id}}">{{p.nombre}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>    
+                </div>
+        
+                <div class="two fields">
+                    <div class="field">
+                        <label>Motivo del cambio</label>
+                        <textarea id="motivo" name="motivo" rows="4" cols="50">
+                        </textarea>
+                    </div>
+                    <div class="field">
+                        <label for="">Archivos adjuntos</label> <br>
+                        <p style="font-size: 13px;">A continuación adjunte su certificado de la  EPS actual en formato PDF. </p>
+                        <input type="file" name="certificadoEPSactual" id="certificadoEPSactual">
+                    </div>
+                </div>
+        
+                <br>
+        
+                <div style="text-align: center;">
+                    <button class="ui grey circular button">
+                        <i class="paper plane icon"></i>
+                        Enviar
+                    </button>
+                </div>
+
+            </form>
+
+            
+                <br><br>
+            
+                <div class="ui divider"></div>
+        
+                <p style="font-size: 14px"  >Si no conoce el nombre de su EPS actual , de click en  "consulte su EPS actual"</p>
+        
+                <button class="ui button">
+                    Consulte su EPS actual
+                </button>
+            
+    </div>
+</div>
+
+
+{% include 'Inc/pie2.html' %}
