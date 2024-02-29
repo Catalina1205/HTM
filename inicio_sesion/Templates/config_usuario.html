@@ -1,0 +1,75 @@
+{% include 'Inc/header2.html' %}
+{% load static %}
+
+
+<div class="ui container" style="background-color: white"> 
+
+    <br>
+    <div>
+      <button style="cursor: default;" class="ui teal button" id="boton_permisos">Actualizar datos</button>
+    </div>
+
+  
+  <div style="max-width: 900px; margin: 0 auto; text-align: center;">
+
+    <br><br>
+    <p style="font-size: 14px">Siempre es importante mantener su información actualizada. Puede realizar actualizaciones de datos personales y cambiar su contraseña fácilmente para garantizar la seguridad de su cuenta. Para realizar estos cambios, llene los campos a continuación.</p>
+
+
+
+    <form class="ui form" action="" method="post" id="formulario">
+      {% csrf_token %}
+      <div class="field" style="padding: 0px!important;">
+        <h5 style="margin-bottom: 50px;margin-top: 40px;">{{perfil.user.first_name}} {{perfil.user.last_name}}</h3>
+      </div>
+      <div class="two fields">
+        <div class="field">
+          <label for="">Número de celular</label>
+          <input name="phone_number" class="" type="number" value="{{perfil.numero_cel}}" required>
+        </div>
+        <div class="field">
+          <label for="">Telefono</label>
+          <input name="telphone_number" class="" type="number" value="{{perfil.numero_tel}}" required>
+        </div>
+      </div>
+      <div class="two fields">
+        <div class="field">
+          <label for="">Edad</label>
+          <input name="age" class="" type="text" value="{{perfil.edad}}" required>
+        </div>
+        <div class="field">
+          <label for="">genero</label>
+          <select name="gender" required>
+            <option value="F" {% if genero == 'F' %}selected{% endif %}>Femenino</option>
+            <option value="M" {% if genero == 'M' %}selected{% endif %}>Masculino</option>
+            <option value="otro" {% if genero == 'otro' %}selected{% endif %}>OTRO</option>
+          </select>
+        </div>
+      </div>
+      <div style="display: flex;align-items: center;" id="div-contraseña">
+        <div style="width: 75%; display: flex; align-items: center;">
+          <div style="border-bottom: 1px solid #000; padding-bottom: 5px;width: 100%;"></div>
+        </div>
+        <div style="width: 25%;text-align: right; cursor: pointer;" onclick="cambioContraseña()">
+          <i class="cog icon"></i>Cambiar contraseña
+        </div>
+      </div>
+
+      <br>
+      
+      <div class="formulario__grupo formulario__grupo-btn-enviar" style="margin-top: 20px;">  
+        <button class="ui teal circular button" type="button" value="Registrar" name="registro" id="continuar">
+          Guardar
+        </button>            
+      </div>
+
+      {% if messages %}
+          {% for message in messages %}
+          <p style="color: rgb(233, 107, 128); margin-bottom: 15px;font-weight: bold; font-size: 14px">{{message|safe}}</p>
+          {% endfor %}
+      {% endif %}
+    </form>
+  </div>
+</div>
+
+{% include 'Inc/pie2.html'%}

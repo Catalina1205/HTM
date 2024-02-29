@@ -1,0 +1,78 @@
+{% include 'Inc/header3.html' %}
+{% load static  %}
+
+
+<div style="background-color: white; width:100%; height:100%">
+    <div class="ui container" style="background-color: white; width:100%; height:100%" > 
+
+        <br>
+        <a class="ui teal icon button" href="/inicioUA" style="cursor: default;">
+            <i class="reply icon"></i>
+        </a>
+        <div>
+            <button style="cursor: default;" class="ui teal button" id="boton_permisos">Permisos</button>
+        </div>
+
+        <br><br>
+        <div style="text-align:center; margin-left: 7%; margin-right:7%">
+            <p>A continuación se presenta la lista de solicitudes de permisos (activas)</p>
+            <br>
+        </div>
+         
+        <table class="ui blue table">
+            <thead>
+                <tr>
+                    <th>Fecha solicitud</th>
+                    <th>Id</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Motivo del permiso</th>
+                    <th>Fecha - Horas</th>
+                    <th>Respuesta</th>  
+                    <th>Abrir</th>  
+                </tr>
+            </thead>
+          
+            <tbody>
+                {% for p in permisosF %}
+                    <tr>
+                        <td>{{ p.Datetime_create }}</td>
+                        <td>{{ p.usuarios_id }}</td>
+                        
+                        <td> {{ p.NombreEmpleado}} </td>
+                        <td>{{ p.ApellidoEmpleado }}</td>
+                        
+                        <td>{{ p.motivo }}</td>
+                        <td>
+                            {% for fecha_hora in p.fechaHora.horas_fechas %}
+                                Fecha: {{ fecha_hora.fecha }} &nbsp;&nbsp; Desde: {{ fecha_hora.hora_inicio }} &nbsp;&nbsp; Hasta: {{ fecha_hora.hora_fin }}<br>
+                            {% endfor %}
+                        </td>
+                        <td>{{ p.respuesta }}</td>
+                        <td>
+                            <a href="/verdetallespermiso/{{ p.id }}"><i class="external alternate icon"></i></a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+            
+            
+            
+            
+            
+            
+            
+            
+            
+        </table>
+        
+      
+        
+      
+
+
+
+    </div>
+
+
+{% include 'Inc/pie3.html' %}

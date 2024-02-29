@@ -1,0 +1,148 @@
+{% include 'Inc/header3.html' %}
+{% load static %}
+
+
+<div class="ui container" style="background-color: white"> 
+
+    <br>
+    <a class="ui teal icon button" href="/historialpermisosUA" style="cursor: default;">
+        <i class="reply icon"></i>
+    </a>
+    <div>
+        <button style="cursor: default;" class="ui teal button" id="boton_permisos">Permisos</button>
+    </div>
+
+    <br><br>
+    <div style="text-align:center; margin-left: 7%; margin-right:7%">
+
+        <h5>Ver solicitud</h5>
+        <br>
+        <div class="ui container">
+           
+            <form class= "ui form" method="POST" enctype="multipart/form-data">
+            
+                {% for p in permisosF %}
+
+                    {% csrf_token %}
+
+                        <table class="ui blue table">
+                            <thead>
+                                <tr>
+                                    <th>Fecha solicitud</th>
+                                    <th>Id del empleado</th>
+                                    <th>Empleado</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr>
+                                    <td>{{ p.Datetime_create }}</td>
+                                    <td>{{ p.usuarios_id }}</td>
+                                    <td>{{ p.NombreEmpleado }}  {{ p.ApellidoEmpleado }}
+                                        {% for c in consultar%}
+                                            <div class="mini ui icon top left pointing dropdown button">
+                                                <i class="angle down icon"></i>
+                                                <div class="menu">
+                                                <div class="header">Datos del empleado</div>
+                                                <div class="item">
+                                                    <strong>{{c.5}}:</strong> {{c.6}}<br>
+                                                    <strong>Área:</strong> {{c.9}}<br>
+                                                    <strong>Cargo:</strong> {{c.10}}<br>
+                                                    <strong>Celular:</strong> {{c.7}}<br>
+                                                    <strong>Telefono:</strong> {{c.8}}<br>
+                                                    <strong>Correo:</strong> {{c.11}}<br>
+                                                </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="three fields">
+                        
+                            <div class="field">
+                                <label><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Tipo de permiso</font></font></label>
+                                <div style="white-space: nowrap;"> {{p.tipo}}</div>
+                            </div>
+
+                            <div class="field">
+                                <label>Motivo del permiso</label>
+                                <div style="white-space: nowrap;"> {{p.motivo}}</div>
+                            </div>
+
+                            <div class="field">
+                                <label><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Fecha - Hora</font></font></label>
+                                {% spaceless %}
+                                    <div id="horaFecha" name="horaFecha" style="white-space: nowrap;">
+                                        {% for fecha_hora in p.fechaHora.horas_fechas %}
+                                            Fecha: {{ fecha_hora.fecha }} &nbsp;&nbsp; Desde: {{ fecha_hora.hora_inicio }} &nbsp;&nbsp; Hasta: {{ fecha_hora.hora_fin }}<br>
+                                        {% endfor %}
+                                    </div>
+                                {% endspaceless %}
+                            </div>
+                        </div>
+                    
+                        <br><br>
+                   
+                        <div class="two fields">
+                    
+                            <div class="field">
+                                <label><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Observaciones</font></font></label>
+                                <textarea id="observaciones" name="observaciones" rows="4" cols="50" readonly>{{p.observaciones}}
+                                </textarea>
+                            </div>
+                                                   
+
+                            <div class="field">
+                                <label for="">Archivos adjuntos</label> 
+                                {% if p.adjunto %}
+                                <a href="{% get_media_prefix %}/{{ p.adjunto }}" target="_blank" style="color: rgb(233, 107, 128);"><i class="big file outline icon"></i>Descargar archivo</a>
+                            {% endif %}                         
+                            </div>
+
+                           
+                        </div>
+                    
+                       
+        
+
+                        <label><b>¿APROBAR?</b></label>
+                        <select name="opcionesrespuesta" class="ui search dropdown">
+                            <option value="si">Sí</option>
+                            <option value="no">No</option>
+                        </select>
+
+                        <div class="ui divider"></div>
+
+                        <div style="text-align: center;">
+                            <button class="ui grey circular button">
+                                <i class="paper plane icon"></i>
+                                Enviar respuesta
+                            </button>
+                            <button class="ui grey circular button"  onclick="cancelarFormulario()" type="button" >
+                                <i class="close icon"></i>
+                                Cancelar
+                            </button>
+                        </div>
+                    
+                {% endfor %}
+
+
+            </form>       
+                
+            
+    </div>
+</div>
+
+<!--Boton de cancelar formulario-->
+<script>
+    function cancelarFormulario() {
+        window.location.href = "/historialpermisosUA/";
+    }
+</script>
+
+
+
+{% include 'Inc/pie2.html' %}

@@ -1,0 +1,90 @@
+<!-- verpermisosUF.html -->
+
+{% include 'Inc/header2.html' %}
+{% load static %}
+
+
+<div class="ui container" style="background-color: white"> 
+
+    <br>
+    <a class="ui teal icon button" href="/historialPermisosUF" style="cursor: default;">
+        <i class="reply icon"></i>
+    </a>
+    <div>
+        <button style="cursor: default;" class="ui teal button" id="boton_permisos">Permisos</button>
+    </div>
+
+    <br><br>
+    <div style="text-align:center; margin-left: 7%; margin-right:7%">
+
+        <h5>Ver solicitud</h5>
+        <br>
+        <div class="ui container">
+           
+            <form class= "ui form" method="POST" enctype="multipart/form-data">
+            
+                {% for p in permisosF %}
+
+                    {% csrf_token %}
+
+
+                        <div class="three fields">
+                        
+                            <div class="field">
+                                <label><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Tipo de permiso</font></font></label>
+                                <div style="white-space: nowrap;"> {{p.tipo}}</div>
+                            </div>
+
+                            <div class="field">
+                                <label>Motivo del permiso</label>
+                                <div style="white-space: nowrap;"> {{p.motivo}}</div>
+                            </div>
+
+                            <div class="field">
+                                <label><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Fecha - Hora</font></font></label>
+                                {% spaceless %}
+                                    <div id="horaFecha" name="horaFecha" style="white-space: nowrap;">
+                                        {% for fecha_hora in p.fechaHora.horas_fechas %}
+                                            Fecha: {{ fecha_hora.fecha }} &nbsp;&nbsp; Desde: {{ fecha_hora.hora_inicio }} &nbsp;&nbsp; Hasta: {{ fecha_hora.hora_fin }}<br>
+                                        {% endfor %}
+                                    </div>
+                                {% endspaceless %}
+                            </div>
+                        </div>
+                    
+                        <br><br>
+                   
+                        <div class="two fields">
+                    
+                            <div class="field">
+                                <label><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Observaciones</font></font></label>
+                                <textarea id="observaciones" name="observaciones" rows="4" cols="50" readonly>{{p.observaciones}}
+                                </textarea>
+                            </div>
+                                                   
+
+                            <div class="field">
+                                
+                                    <label for="">Archivos adjuntos</label> 
+                                    <br>
+                                    {% if p.adjunto %}
+                                    <a href="{% get_media_prefix %}/{{ p.adjunto }}" target="_blank" style="color: rgb(233, 107, 128);"><i class="big file outline icon"></i>Descargar archivo</a>
+                                {% endif %}
+                                                           
+                            </div>
+
+                           
+                        </div>
+                    
+                {% endfor %}
+
+
+            </form>       
+                
+            
+    </div>
+</div>
+
+
+{% include 'Inc/pie2.html' %}
+

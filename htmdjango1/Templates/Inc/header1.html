@@ -1,0 +1,48 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HUMANT TALENT MANAGEMENT</title>
+
+    <link rel="stylesheet" href="{% static 'Css/Estilos.css' %}">
+    <link rel="stylesheet" href="{% static 'Css/index.css' %}">
+
+    <link rel="stylesheet" href="{% static 'Css/semantic.min.css' %}">
+    <script src="{% static 'Js/jquery-3.1.1.min.js'  %}"></script>
+    <script src="{% static 'Js/semantic.min.js' %}"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="img/Logo_Faviticon.PNG" type="image/x-icon">
+    <script src="https://kit.fontawesome.com/41bcea2ae3.js" crossorigin="anonymous"></script>
+
+
+</head>
+
+<body style="background-image: url('/static/Img/Fondo_Inicio_pagina.png')" class="imagen_fondo_inicio">
+          
+   
+    <!-------  Cabecera -------->
+    <div class="ui secondary menu" id="cabecera_id" style= "border-top: 3px solid transparent; border-top-color: rgb(233, 107, 128); border-bottom: 3px solid transparent; border-bottom-color: rgb(55, 197, 197); height: 9%;">
+        <img id="logo_cabecera_inicio_responsive" src="{% static 'Img/solo_logo.png' %}" alt="">
+        <img id="logo_cabera_inicio"   src="{% static 'Img/htmBanner.png' %}" alt="" width="130px" height="50px" style="margin-left: 5%"> 
+       
+
+        <div class="header center item" id="nombre_htm_cabecera_inicio"> HUMANT TALENT MANAGEMENT</div> 
+
+        <p class="header item" id="bienvenidos_cabecera" style="color:rgb(230, 173, 30)"> ¡BIENVENIDOS! </p>
+    
+        <div class="right menu; header center item" id="ayuda_cabecera_inicio">
+            <button class="ui  button" >
+                ¿Ayuda?
+            </button>
+        </div>
+    </div>
+
+    <div>

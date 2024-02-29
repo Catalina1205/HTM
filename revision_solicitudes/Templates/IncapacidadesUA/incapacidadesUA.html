@@ -1,0 +1,67 @@
+{% include 'Inc/header3.html' %}
+{% load static  %}
+
+
+<div style="background-color: white; width:100%; height:100%">
+    <div class="ui container" > 
+
+        <br>
+        <a class="ui teal icon button" href="/inicioUA" style="cursor: default;">
+            <i class="reply icon"></i>
+        </a>
+        <div>
+            <button style="cursor: default;" class="ui teal button" id="boton_permisos">Incapacidades</button>
+        </div>
+
+        <br><br>
+        <div style="text-align:center; margin-left: 7%; margin-right:7%">
+            <p>A continuación se presenta la lista de los registros de Incapacidades (activas)</p>
+            <br>
+        </div>
+    
+        <table class="ui blue table">
+          <thead>
+              <tr>
+                  <th>Fecha solicitud</th>
+                  <th>Id</th>
+                  <th>Nombre</th>
+                  <th>Apellido</th>
+                  <th>Tipo de incapacidad</th>
+                  <th>Fecha de inicio</th>
+                  <th>Fecha de finalización</th>
+                  <th>Respuesta</th>  
+                  <th>Abrir</th>  
+              </tr>
+          </thead>
+
+          <tbody>
+
+              {% for i in incapacidades %}
+          
+              <tr>
+                  <td>{{ i.1 }}</td>
+                  <td>{{ i.2 }}</td>
+                  <td>{{ i.3 }}</td>
+                  <td>{{ i.4 }}</td>
+                  <td>{{ i.5 }}</td>
+                  <td>{{ i.6 }}</td>
+                  <td>{{ i.7 }}</td>
+                  <td>{{i.8}}</td>
+                  <td>
+                    <a href="/verdetallesincapacidad/{{i.0}}"><i class="external alternate icon"></i></a>
+                  </td>
+              </tr>
+
+              {% endfor %}
+
+          </tbody>
+      </table>
+
+
+
+
+        
+        </div>
+    </div>
+
+{% include 'Inc/pie3.html' %}

@@ -1,0 +1,110 @@
+{%  include 'Inc/header2.html'   %}
+{% load static  %}
+
+<div class="ui container" style="background-color: white"> 
+
+    <br>
+
+    <a class="ui teal icon button" href="/incapacidadesUF" style="cursor: default;">
+        <i class="reply icon"></i>
+    </a>
+
+    <div>
+        <button style="cursor: default;" class="ui teal button" id="boton_permisos">Incapacidades</button>
+    </div>
+
+    <br><br>
+    <div style="text-align:center; margin-left: 7%; margin-right:7%">
+
+        <h5>Realizar registro</h5>
+        <br>
+        <div class="ui container">
+            
+            <form class= "ui form" action="" method="POST" enctype="multipart/form-data">
+            
+                {% csrf_token %}
+            
+                <div class="two fields">
+                    <div class="field">
+                        <label><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Tipo de incapacidad</font></font></label>
+                        <select name="tipodeincapacidad_id" id="tipodeincapacidad_id" class="ui search dropdown" style="font-size: 14px;" required>
+                            <option value="" disabled selected>Seleccione una opción</option>
+                            {% for t in tipos %}
+                                <option value="{{ t.id }}">{{ t.nombre }}</option>
+                            {% endfor %}
+                        </select>
+                        
+                    </div>
+                    <div class="field">
+                        <label>Número de Incapacidad</label>
+                        <input type="text" name="numeroIncapacidad" required>
+                    </div>
+                </div>
+            
+           
+                <div class="two fields">
+                    <div class="field">
+                        <label>Desde</label>
+                        <input type="date" placeholder="First Name" name="fechaInicio" id="fechaInicio" required>
+                    </div>
+                    <div class="field">
+                        <label>Hasta</label>
+                        <input type="date" placeholder="Middle Name" name="fechaFin" id="fechaFin" required>
+                    </div>
+                </div>
+            
+            
+                
+                <div class="one fields">
+                    <div class="field">
+                      <label for="">Archivos adjuntos</label> <br>
+                      <p style="font-size: 14px" >A continuación adjunte el documento de incapacidad generado por su EPS en formato PDF</p>
+                      <input type="file" name="certificadoIncapacidad" id="" accept= ".pdf" required>
+                    </div>
+                </div>
+
+                <br><br>
+            
+                <div style="text-align: center;">
+                    <button class="ui grey circular button">
+                        <i class="paper plane icon"></i>
+                        Enviar
+                    </button>
+                    <button class="ui grey circular button"  onclick="cancelarFormulario()" type="button">
+                        <i class="close icon"></i>
+                        Cancelar
+                    </button>
+                </div>
+            
+            </form>
+            
+            
+      
+
+    </div>
+</div>
+
+<!--Boton de cancelar formulario-->
+<script>
+    function cancelarFormulario() {
+        window.location.href = "/incapacidadesUF/";
+    }
+</script>
+
+
+<!-- Para las fechas (que la finalización sea igual o mayor a la de inicio)-->
+<script>
+    var fechaInicioInput = document.getElementById('fechaInicio');
+    var fechaFinInput = document.getElementById('fechaFin');
+    fechaInicioInput.addEventListener('change', function() {
+        // Configurar el atributo 'min' del campo de fecha de finalización
+        fechaFinInput.min = fechaInicioInput.value;
+        // Restablecer el valor del campo de fecha de finalización si es necesario
+        if (fechaFinInput.value < fechaInicioInput.value) {
+            fechaFinInput.value = fechaInicioInput.value;
+        }
+    });
+</script>
+
+
+{%  include 'Inc/pie2.html'  %}

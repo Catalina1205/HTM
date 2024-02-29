@@ -1,0 +1,68 @@
+{% include 'Inc/header3.html' %}
+{% load static  %}
+
+
+<div style="background-color: white; width:100%; height:100%">
+    <div class="ui container" > 
+
+        <br>
+        <a class="ui teal icon button" href="/inicioUA" style="cursor: default;">
+            <i class="reply icon"></i>
+        </a>
+        <div>
+            <button style="cursor: default;" class="ui teal button" id="boton_permisos">Traslado de EPS</button>
+        </div>
+
+        <br><br>
+        <div style="text-align:center; margin-left: 7%; margin-right:7%">
+            <p>A continuación se presenta la lista de solicitudes de traslado de EPS (activas)</p>
+            <br>
+        </div>
+    
+        <table class="ui blue table">
+            <thead>
+                <tr>
+                    <th>Fecha de solicitud</th>
+                    <th>Id</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>EPS actual</th>
+                    <th>EPS destino</th>
+                    <th>Cargo</th>
+                    <th>Area</th>
+                    <th>Respuesta</th>
+                    <th>Abrir</th>  
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for t in traslados %}
+            
+                <tr>
+                    <td>{{ t.1 }}</td>
+                    <td>{{ t.2 }}</td>
+                    <td>{{ t.3 }}</td>
+                    <td>{{ t.4 }}</td>
+                    <td>{{ t.5 }}</td>
+                    <td>{{ t.6 }}</td>
+                    <td>{{ t.8 }}</td>
+                    <td>{{ t.10 }}</td>
+                    <td>{{t.7}}</td>
+                    <td>
+                        <a href="/verdetallestraslado/{{t.0}}"><i class="external alternate icon"></i></a>
+                    </td>
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+        </table>
+
+
+       
+        </div>
+    </div> 
+</div>     
+
+{% include 'Inc/pie3.html' %}

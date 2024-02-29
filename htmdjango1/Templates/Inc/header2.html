@@ -1,0 +1,250 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="{% static 'Css/Estilos.css' %}">
+    <link rel="stylesheet" href="{% static 'Css/index.css' %}">
+
+    <link rel="stylesheet" href="{% static 'Css/semantic.min.css' %}">
+    <script src="{% static 'Js/jquery-3.1.1.min.js'  %}"></script>
+    <script src="{% static 'Js/semantic.min.js' %}"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="img/Logo_Faviticon.PNG" type="image/x-icon">
+    <script src="https://kit.fontawesome.com/41bcea2ae3.js" crossorigin="anonymous"></script>
+
+</head>
+<body>
+    
+    <div id="contenedor_cabera_contenido">
+        <!-------  Cabecera -------->
+        <div id="cabecera" class="ui menu" style= "border-top: 3px solid transparent; border-top-color: rgb(233, 107, 128); border-bottom: 3px solid transparent; border-bottom-color: rgb(55, 197, 197)">
+        
+            <img id="logo_cabecera" src='{% static "Img/htmBanner.png" %}'alt="" width="130px" height="50px" style="margin-left: 5%">
+            <div class="right menu" id="header">
+                <a class="item" id="usuario_name">
+                    <i class="user icon" style="margin-right:10px"></i>
+                    <div style="display: flex; align-items: center;">
+                      <div style="display: inline-block; vertical-align: middle;">
+                        <div id="texto_header">{{ nombre_usuario }} {{ apellido_usuario }}</div> 
+                        <p style="text-align: center; margin-bottom: 0; font-size: 14px" id="texto_header"><b>Empleado</b></p>
+                      </div>
+                    </div>
+                    {% if es_rrhh %}
+                        <a id="cambiar_no_responsive" href="/inicioUA" style="text-decoration: none;">
+                            <i class="sync alternate icon" style="color: rgb(0, 0, 0); margin-top:18px; margin-right:20px"></i>
+                        </a>
+                    {% endif %}
+                </a>
+                <a class="item" id="botones_header_notificacion">
+                    <i class="bell icon"></i>
+                </a>
+                <a class="item ui icon top left pointing dropdown button" id="botones_header_configuracion">
+                    <i class="cog icon"></i>
+                    <div class="menu">
+                        <div class="item" onclick="url('/user/configuracion')">Configuracion de cuenta</div>
+                    </div>
+                </a> 
+                <a class="item" id="botones_header_configuracion" href="/logout">
+                    <i class="sign out alternate icon"></i>
+                </a>   
+
+                <i class="fas fa-bars" id="btn_menu"></i>
+                <!---↑ icono del menu hamburguesa ↑ -->
+            </div>
+        </div>
+    
+        <!-------  Grid (Menú y contenido) -------->
+        <div class="container">
+            <div class="grid-container">
+                <!-- Menu no responsive-->
+                <div class="one-space">
+                    <div class="ui vertical menu; ui compact menu; ui stackable menu" id="izquierda">
+                        <a class="item" style="cursor: default">
+                                <div class="header" style="text-align: center;">Solicitudes</div>	
+                                <div  class="menu"   id="espacio">
+                                    <a  class="link1" href="/trasladoEPSUF">
+                                        <button type="button" class="boton1">
+                                            <img src='{% static "Img/eps.png" %}' alt="" width="65px"> 
+                                            <p class="titulosmenu"> Traslado de EPS</p>
+                                        </button>
+                                    </a>
+                                    <a  class="link1" href="/incapacidadesUF">
+                                        <button type="button" class="boton1">
+                                            <img src='{% static "Img/incapacidades.png" %}' alt="" width="65px"> 
+                                            <p class="titulosmenu">Incapacidades</p>
+                                        </button>
+                                    </a>
+                                    <a  class="link1" href="/permisosUF">
+                                        <button type="button" class="boton1">
+                                            <img src='{% static "Img/permisos.png" %}' alt="" width="66px">
+                                            <p class="titulosmenu">Permisos</p>
+                                        </button>
+                                    </a>
+                                </div>
+                        </a>
+                        <a class="item" style="cursor: default">
+                            <div class="header" style="text-align: center;">Agenda</div>
+                                <div  class="menu" id="espacio">
+                                    <a class="link2" href="#">
+                                        <button type="button" class="boton2">
+                                            <img src='{% static "Img/calendario.png" %}' alt="" width="65px"> 
+                                            <p class="titulosmenu"> Calendario </p>
+                                        </button>
+                                    </a>
+                                    <a class="link2" href="#">
+                                            <button type="button" class="boton2">
+                                                <img src='{% static "Img/capacitaciones.png" %}' alt="" width="65px"> 
+                                                <p class="titulosmenu">Capacitaciones</p>
+                                            </button>
+                                    </a>
+                                </div>
+                        </a>
+                        <a class="item" style="cursor: default">
+                            <div class="header" style="text-align: center;">Certificados</div>			
+                            <div class="menu"  id="espacio">
+                                <a class="link3" href="#">
+                                    <button type="button" class="boton3">
+                                        <img src='{% static "Img/pagos.png" %}' alt="" width="65px">
+                                        <p class="titulosmenu"> Pagos </p>
+                                    </button>
+                                </a>
+                                <a class="link3" href="#">
+                                    <button type="button" class="boton3">
+                                        <img src='{% static "Img/comprobantes.png" %}' alt="" width="65px"> 
+                                        <p class="titulosmenu">comprobantes</p>
+                                    </button>
+                                </a>
+                                <a class="link3" href="#">
+                                    <button type="button" class="boton3">
+                                        <img src='{% static "Img/certificados.png" %}' alt="" width="65px">
+                                        <p class="titulosmenu">Certificados</p>
+                                    </button>
+                                </a>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <!---------------  CONTENIDO Y RESPONSIVE ------------------->
+                <div class="two-spaces">
+                    <div  id="background_principal">
+
+                        <!--- Menu hamburguesa - responsive-->
+                        <header>
+                            <div class="container__menu">
+                                <div class="logo"></div>
+                                <div class="menu">
+                                    <div id="back_menu"></div>
+
+                                    <nav id="nav">
+                                    
+
+                                        <div style="background-color: rgb(11, 156, 156)" id="usuario_hamburguesa">
+                                            <i class="user icon" id="icono_usuario_hamburguesa"></i>
+                                            <div style="display: inline-block; vertical-align: middle;" id="contenedor_usuario_hamburguesa">
+                                              <div id="texto_header">Nombre de usuario</div> 
+                                              <div style="display: flex; align-items: center;">
+                                                <p style="text-align: center; margin-left: 15px; margin-bottom: 0;" id="texto_header">Empleado</p>
+                                                <a href="/inicioUA" style="text-decoration: none; margin-left: 10px; display: inline-block;">
+                                                  <i class="sync alternate icon" style="color: white;"></i>
+                                                </a>
+                                              </div>
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                        <ul class="list">
+
+                                            
+                                            <li class="list__item" style="margin-top: 40px">
+                                                <div class="list__button" style="padding-bottom: 15px;">
+                                                    <i class="home icon list__img"></i> 
+                                                    <a href="/index" class="nav__link">Inicio</a>   
+                                                </div>
+                                            </li>
+
+                                            <li class="list__item  list__item--click">
+                                                <div class="list__button list__button--click">
+                                                    <i class="clipboard icon"></i>
+                                                    <a href="#" class="nav__link">Solicitudes</a>
+                                                    <img src='{% static "Img/flecha2.svg" %}' class="list__arrow" style="width: 20px; height:20px">   
+                                                </div>
+
+                                                <ul class="list__show_solicitudes">
+                                                    <li class="list__inside">
+                                                        <a href="/traslado" class="nav__link  nav__link--inside">Traslado de EPS</a>
+                                                    </li>
+                                                    <li class="list__inside">
+                                                        <a href="/incapacidades" class="nav__link  nav__link--inside">Incapacidades</a>
+                                                    </li>
+                                                    <li class="list__inside">
+                                                        <a href="/permisos" class="nav__link  nav__link--inside">Permisos</a>
+                                                    </li>                                                
+                                                </ul>
+                                            </li>
+
+                            
+                                            <li class="list__item  list__item--click">
+                                                <div class="list__button list__button--click">
+                                                    <i class="calendar alternate icon"></i>
+                                                    <a href="#" class="nav__link">Agenda</a>   
+                                                    <img src='{% static "Img/flecha2.svg" %}'  class="list__arrow" style="width: 20px; height:20px">
+                                                </div>
+
+                                                <ul class="list__show_agenda">
+                                                    <li class="list__inside">
+                                                        <a href="#" class="nav__link  nav__link--inside">Calendario</a>
+                                                    </li>
+                                                    <li class="list__inside">
+                                                        <a href="#" class="nav__link  nav__link--inside">Capacitaciones</a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+
+                                            <li class="list__item  list__item--click">
+                                                <div class="list__button list__button--click">
+                                                    <i class="file alternate icon"></i>
+                                                    <a href="#" class="nav__link">Certificados</a>   
+                                                    <img src='{% static "Img/flecha2.svg" %}'  class="list__arrow" style="width: 20px; height:20px">
+                                                </div>
+
+                                                <ul class="list__show_certificados">
+                                                    <li class="list__inside">
+                                                        <a href="#" class="nav__link  nav__link--inside">Pagos</a>
+                                                    </li>
+                                                    <li class="list__inside">
+                                                        <a href="#" class="nav__link  nav__link--inside">Comprobantes</a>
+                                                    </li>
+                                                    <li class="list__inside">
+                                                        <a href="#" class="nav__link  nav__link--inside">Certificados</a>
+                                                    </li>
+                                                </ul>
+
+                                            </li>
+                                        </ul>
+                                        
+                                        <div class="ui bottom left pointing dropdown link item" style="background-color: rgba(0, 0, 0, 0.387)" id="configuracion_hamburguesa">
+                                            <i class="cog icon" id="iconos_footer_hamburguesa"></i>
+                                            <div id="texto_header">Configuración</div>
+                                            <div class="menu">
+                                                <a href="/user/configuracion" class="item">Configuración de cuenta</a>
+                                            </div>    
+                                        </div>
+                                        
+                                        <div style="background-color: rgb(11, 156, 156) " id="cerrarSesion_hamburguesa">
+                                            <i class="sign-out icon" id="iconos_footer_hamburguesa"></i>
+                                            <a href="/logout"><div id="texto_header"><b>Cerrar sesión</b></div></a>        
+                                        </div>
+
+                                    </nav>
+                                </div>
+                            </div>
+                        </header>
+                        <!--- Fin de menú hamburguesa. -->

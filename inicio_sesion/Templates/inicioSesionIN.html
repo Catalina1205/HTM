@@ -1,0 +1,49 @@
+
+{% include 'Inc/header1.html' %}
+{% load static %}
+
+<center>
+    <div>
+        <br>
+        <h4>Inicia sesión</h4>
+        <p style="margin-left: 10px; margin-right:10px; font-size: 14px">Inicia sesión con tu número de documento de identidad <br>
+            y contraseña</p> <br><br>
+
+        <form method="post" action="">
+            {% csrf_token %}
+            
+            <label style="color:black"> Documento de identidad *</label> <br>
+            <div class="ui right focus labeled input">
+                <input type="text" name="documento_id">
+            </div>
+            <br> <br>
+
+            <label for="" class="left">Contraseña*</label> <br>
+            <div class="ui input focus">
+                <input type="password" name="contrasena">
+            </div>
+            <br>
+
+            <div class="ui link list">
+                <a class="item">Olvidé mi contraseña</a>
+            </div>
+            <br>
+
+            <button type="submit" class="ui teal circular button">Ingresar</button> <br> <br>
+            {% if messages %}
+             {% for message in messages %}
+             <p style="color: rgb(233, 107, 128); margin-bottom: 15px;font-weight: bold; font-size: 14px">{{message|safe}}</p>
+             {% endfor %}
+            {% endif %}        
+        </form>
+
+        <p style="font-size: 14px">¿Aún no tienes una cuenta?</p> 
+
+        <div class="ui link list">
+            <a class="item" href="/registropaso1" style="color:black">Registrarse</a>
+        </div>  
+    </div>
+</center>
+
+</body>
+</html>

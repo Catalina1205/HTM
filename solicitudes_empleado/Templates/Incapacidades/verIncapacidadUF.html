@@ -1,0 +1,82 @@
+{% include 'Inc/header2.html' %}
+{% load static %}
+
+
+<div class="ui container" style="background-color: white"> 
+
+    <br>
+    <a class="ui teal icon button" href="/historialincapacidadesUF" style="cursor: default;">
+        <i class="reply icon"></i>
+    </a>
+    <div>
+        <button style="cursor: default;" class="ui teal button" id="boton_permisos">Incapacidades</button>
+    </div>
+
+    <br><br>
+    <div style="text-align:center; margin-left: 7%; margin-right:7%">
+
+        <h5>Ver solicitud</h5>
+        <br>
+        <div class="ui container">
+           
+            <form class= "ui form" method="POST" enctype="multipart/form-data">
+            
+                {% for i in incapacidades %}
+
+                    {% csrf_token %}
+
+                        <div class="two fields">
+                        
+                            <div class="field">
+                                <label><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Tipo de incapacidad</font></font></label>
+                                <input type="text" value="{{i.5}}" readonly>
+                            </div>
+
+                            <div class="field">
+                                <label>Número de Incapacidad</label>
+                                <input type="text" value="{{i.6}}" readonly>
+                            </div>
+                        </div>
+                    
+                   
+                        <div class="two fields">
+                    
+                            <div class="field">
+                                <label><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Desde</font></font></label>
+                                <input type="text" value="{{i.7}}" readonly>
+                            </div>
+
+                            <div class="field">
+                                <label><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Hasta</font></font></label>
+                                <input type="text" value="{{i.8}}" readonly>
+                            </div>
+
+                           
+                        </div>
+                    
+                        <br><br>
+                        
+                        <div class="one fields">
+                            <div class="field">
+                                <label for="">Archivos adjuntos</label> 
+                                <br>
+                                {% if i.9 %}
+                                <a href="{% get_media_prefix %}/{{ i.9 }}" target="_blank" style="color: rgb(233, 107, 128);"><i class="big file outline icon"></i>Descargar archivo</a>
+                            {% endif %}
+                            </div>
+                        </div>
+        
+                    
+                {% endfor %}
+
+
+            </form>       
+                
+            
+    </div>
+</div>
+
+
+{% include 'Inc/pie2.html' %}
+
+

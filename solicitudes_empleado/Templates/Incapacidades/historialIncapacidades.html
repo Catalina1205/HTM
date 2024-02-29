@@ -1,0 +1,84 @@
+{% include 'Inc/header2.html' %}
+
+{% load static %}
+
+
+<div class="ui container" style="background-color: white; width:100%"> 
+
+    <center>
+    <br><br>    
+    <div style="text-align: left;">    
+        <a class="ui teal icon button" href="/incapacidadesUF" style="cursor: default;">
+            <i class="reply icon"></i>
+        </a>
+    </div>
+
+                    
+        <div>
+            <button style="cursor: default" class="ui teal button">Incapacidades</button>
+        </div>
+    
+        <h5>Historial de solicitudes</h5>
+                            
+        <p style="font-size: 14px"  >A través de esta apartado podrá visualizar los proceso relacionados a sus registro de incapacidades </p>
+
+    
+        <br>
+
+        <table class="ui blue table">
+            <thead>
+                <tr>
+                    <th>Fecha solicitud</th>
+                    <th>Tipo de incapacidad</th>
+                    <th>Fecha de inicio</th>
+                    <th>Fecha de finalización</th>
+                    <th>Respuesta</th>  
+                    <th>Abrir</th>  
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for i in incapacidades %}
+            
+                <tr>
+                    <td>{{ i.1 }}</td>
+                    <td>{{ i.5 }}</td>
+                    <td>{{ i.2 }}</td>
+                    <td>{{ i.3 }}</td>
+                    <td>{{i.6}}</td>
+                    <td>
+                        <a href="{% url 'ver_incapacidad_uf' i.0 %}"><i class="external alternate icon"></i></a>
+                    </td>
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+        </table>
+    
+
+    
+        <script>
+            function borrar(id){
+                var respuesta = confirm("Desea borrar el registro número: " + id)
+                if (respuesta){
+                    location.href = "/borrarincapacidad/" + id
+                }
+                else {
+                    alert("El registro no se va a borrar, está a salvo")
+                }
+            }
+
+        </script>
+        
+    
+        
+    </div>
+    </center>
+
+</div>
+
+
+
+{% include 'Inc/pie2.html'  %}

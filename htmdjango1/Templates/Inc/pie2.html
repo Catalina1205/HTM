@@ -1,0 +1,133 @@
+{% load static %}   
+                
+                
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div>
+<p id= "pie_pagina" style="background-color: rgba(49, 146, 146, 0.288); color: rgb(13, 110, 110); font-size: 12px; text-align:center;  margin-bottom: 0; padding-bottom: 0">HTM - 2023</p>
+</div>
+
+<script src="{% static 'Js/menu_hamburguesa.js'  %}"></script>
+<script>
+    $('.ui.dropdown').dropdown();
+    function url(url) {
+        window.location.href = url;
+    }
+    if (window.location.href.endsWith('/user/configuracion')) {
+        function cambioContraseña(element) {
+            if (document.getElementById('contraseña-fields') == null) {
+                var nuevoDiv = document.createElement('div');
+                var divHijo1 = document.createElement('div');
+                var divHijo2 = document.createElement('div');
+                var label1 = document.createElement('label');
+                label1.innerHTML = 'Nueva Contraseña';
+                var label2 = document.createElement('label');
+                label2.innerHTML = 'Confirmar Contraseña';
+                var input1 = document.createElement('input');
+                input1.setAttribute('type', 'password');
+                input1.setAttribute('name', 'password');
+                input1.setAttribute('required', true)
+                var input2 = document.createElement('input');
+                input2.setAttribute('name', 'password_confirm');
+                input2.setAttribute('type', 'password');
+                input2.setAttribute('required', true)
+                var nuevoElemento = document.getElementById('div-contraseña');
+
+                nuevoDiv.setAttribute('class', 'two fields');
+                nuevoDiv.setAttribute('id', 'contraseña-fields');
+                divHijo1.setAttribute('class', 'field');
+                divHijo2.setAttribute('class', 'field');
+
+                divHijo1.appendChild(label1);
+                divHijo1.appendChild(input1);
+                divHijo2.appendChild(label2);
+                divHijo2.appendChild(input2);
+
+                nuevoDiv.appendChild(divHijo1);
+                nuevoDiv.appendChild(divHijo2);
+
+
+                nuevoElemento.insertAdjacentElement('afterend', nuevoDiv);
+            }else{
+                elemento = document.getElementById('contraseña-fields');
+                elemento.remove();
+            }
+        }
+        document.getElementById('continuar').addEventListener('click', function (e) {
+        var formulario = document.getElementById('formulario');
+        var mensajeError = '';
+
+        if (document.getElementById('contraseña-fields') != null) {
+            var padreContraseñas = document.getElementById('contraseña-fields');
+            var hijosContraseñas = padreContraseñas.children;
+            var admision = true;
+
+            for (var i = 0; i < hijosContraseñas.length; i++) {
+                var hijosInput = hijosContraseñas[i].children;
+                if (hijosInput[1].value.length < 8) {
+                    admision = false;
+                    mensajeError += 'La contraseña tiene menos de 8 caracteres\n';
+                    break;
+                }
+            }
+
+            if (hijosContraseñas[0].children[1].value !== hijosContraseñas[1].children[1].value) {
+                mensajeError += 'Las contraseñas son diferentes\n';
+                admision = false;
+            }
+
+            if (admision) {
+                if (formulario.checkValidity()) {
+                    formulario.submit();
+                    return;
+                } else {
+                    mensajeError += 'Por favor, complete todos los campos obligatorios correctamente.\n';
+                }
+            }
+        } else {
+            if (!formulario.checkValidity()) {
+                mensajeError += 'Por favor, complete todos los campos obligatorios correctamente.\n';
+            }else{
+                formulario.submit();
+            }
+        }
+
+        if(document.getElementById('mensajeError') == null) {
+            console.log('no existe')
+            if (mensajeError.trim() !== '') {
+                var p = document.createElement('p');
+                p.setAttribute('id', 'mensajeError');
+                p.innerHTML = mensajeError;
+                p.setAttribute('style','color: rgb(233, 107, 128);margin-top:30px;font-size: 14px')
+                var elemento = document.getElementById('continuar').parentElement;
+                elemento.appendChild(p);
+            }
+        }else{
+            console.log('existe')
+            var elementoError = document.getElementById('mensajeError');
+            elementoError.remove();
+            if (mensajeError.trim() !== '') {
+                var p = document.createElement('p');
+                p.setAttribute('id', 'mensajeError');
+                p.innerHTML = mensajeError;
+                p.setAttribute('style','color: rgb(233, 107, 128);margin-top:30px;font-size: 14px')
+                var elemento = document.getElementById('continuar').parentElement;
+                elemento.appendChild(p);
+            }
+        }
+    });
+}
+</script>
+
+
+</body>
+
+</html>
+
+
+

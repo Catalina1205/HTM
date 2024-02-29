@@ -1,0 +1,127 @@
+{% include 'Inc/header2.html' %}
+{% load static %}
+
+
+<div class="ui container" style="background-color: white"> 
+
+    <br>
+    <!--Boton para devolver a -->
+    <a class="ui teal icon button" href="/trasladoEPSUF" style="cursor: default;">
+        <i class="reply icon"></i>
+    </a>
+    <div>
+        <button style="cursor: default;" class="ui teal button" id="boton_permisos">Traslado de EPS</button>
+    </div>
+
+    <br><br>
+    <div style="text-align:center; margin-left: 7%; margin-right:7%">
+
+        <h5>Realizar solicitud</h5>
+        <br>
+        <div class="ui container">
+           
+            <form class= "ui form" action="" method="POST" enctype="multipart/form-data">
+            
+                {% csrf_token %}
+
+                   <div class="two fields">
+
+                    <div class="field">
+                        <label><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">EPS actual</font></font></label>
+                        <select name="epsactual_id" id="epsactual_id" class="ui search dropdown" required>
+                            <option value="seleccione" disabled selected>Seleccione una opción</option>
+                            {% for e in epss %}
+                                <option value="{{e.id}}" id="{{e.id}}">{{e.nombre}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    
+                    <div class="field">
+                        <label><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">EPS nueva</font></font></label>
+                        <select name="epsnueva_id" id="epsnueva_id" class="ui search dropdown" required>
+                            <option value="seleccione" disabled selected>Seleccione una opción</option>
+                            {% for p in epss %}
+                                <option value="{{p.id}}" id="{{p.id}}">{{p.nombre}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>   
+                </div>
+        
+                <div class="two fields"> 
+                    <div class="field">
+                        <label>Motivo del cambio</label>
+                        <textarea rows="2" style="height: 89px;" name="motivo" required></textarea>
+
+                    </div>
+                    <div class="field">
+                        <label for="">Archivos adjuntos</label> <br>
+                        <p style="font-size: 13px;">A continuación adjunte su certificado de la  EPS actual en formato PDF. </p>
+                        <input type="file" name="certificadoEPSactual" id="certificadoEPSactual"  accept=".pdf" required>
+                    </div>
+                </div>
+        
+                <br>
+        
+                <div style="text-align: center;">
+                    <button class="ui grey circular button">
+                        <i class="paper plane icon"></i>
+                        Enviar
+                    </button>
+                    <button class="ui grey circular button"  onclick="cancelarFormulario()" type="button" >
+                        <i class="close icon"></i>
+                        Cancelar
+                    </button>
+                </div>
+
+            </form>
+
+            
+                <br><br>
+            
+                <div class="ui divider"></div>
+        
+                <p style="font-size: 14px"  >Si no conoce el nombre de su EPS actual , de click en  "consulte su EPS actual"</p>
+        
+                <a href="https://www.adres.gov.co/consulte-su-eps" target="_blank">
+                    <button class="ui button">
+                        Consulte su EPS actual
+                    </button>
+                </a>
+            
+    </div>
+</div>
+
+<!--Boton de cancelar formulario-->
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+<script>
+    function cancelarFormulario() {
+        window.location.href = "/trasladoEPSUF/";
+    }
+</script>
+
+<script>
+    $(document).ready(function() {
+        $('#epsactual_id').change(function() {
+            var selectedOption = $(this).val();
+            $('#epsnueva_id option').prop('disabled', false); // Habilitar todas las opciones en EPS nueva
+            $('#epsnueva_id option[value="' + selectedOption + '"]').prop('disabled', true); // Deshabilitar la opción seleccionada en EPS nueva
+            $('#epsnueva_id option[value= "seleccione"]').prop('disabled', true);
+        });
+
+        $('#epsnueva_id').change(function() {
+            var selectedOption = $(this).val();
+            $('#epsactual_id option').prop('disabled', false); // Habilitar todas las opciones en EPS actual
+            $('#epsactual_id option[value="' + selectedOption + '"]').prop('disabled', true); // Deshabilitar la opción seleccionada en EPS actual
+            $('#epsactual_id option[value= "seleccione"]').prop('disabled', true);
+
+        });
+    });
+
+</script>
+
+
+
+{% include 'Inc/pie2.html' %}

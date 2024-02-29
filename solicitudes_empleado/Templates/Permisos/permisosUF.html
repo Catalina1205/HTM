@@ -1,0 +1,49 @@
+{% include 'Inc/header2.html' %}
+
+{% load static %}
+
+<div class="ui container" style="background-color: white; width:100%"> 
+
+    <br>
+    <a class="ui teal icon button" href="/inicio" style="cursor: default;">
+        <i class="reply icon"></i>
+    </a>
+    <div>
+        <button style="cursor: default;" class="ui teal button" id="boton_permisos">Permisos</button>
+    </div>
+
+    <br><br>
+    <div style="text-align:center; margin-left: 7%; margin-right:7%; font-size:14px">
+        <p style="font-size:14px">A través de esta apartado podrá llevar a cabo dos procesos relacionados a sus Solicitudes de PERMISOS realizados a la organización a la cual pertenece. </p>
+        <br>
+        <p style="font-size:14px">Puede llevar a cabo solicitudes de permisos cuando requiera ausentarse de sus practicas laborales por razones de médicas, personales u obligaciones públicas. Así mismo, puede ver su historial de solicitudes realizadas, su estado y respuesta. 
+        </p>
+        <br>
+        <p style="color: rgb(26, 179, 179); font-size:14px">Selecciona una opción para continuar</p>
+    </div>
+
+
+    <div style="display: flex; justify-content: center;">
+        <a  class="link4" href="/insertarpermiso" style="padding: 5%">
+            <button type="button" class="boton4">
+                <img src="{% static 'Img/realizar.png' %}" alt="" width="65px"> 
+            </button>
+            <p style="margin-top: 7%; color: #000; font-size: 13px"> Realizar solicitud</p>
+        </a>
+        
+        <a  class="link4" href="/historialPermisosUF" style="padding: 5%">
+            <button type="button" class="boton4">
+                <img src="{% static 'Img/historial.png' %}" alt="" width="65px"> 
+            </button>
+            <br>
+            <p  style="margin-top: 7%; color: #000; font-size: 13px"> Ver historial</p>
+        
+        </a>
+        
+
+    </div>
+
+</div>
+
+
+{% include 'Inc/pie2.html' %}

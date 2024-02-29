@@ -1,0 +1,77 @@
+
+<!-- historialPermisos.html   UF-->
+{% include 'Inc/header2.html' %}
+
+{%  load static %}
+
+
+<div class="ui container" style="background-color: white; width:100%"> 
+
+    <br><br>
+        <center>
+            
+            <div style="text-align: left;">    
+                <a class="ui teal icon button" href="/permisosUF" style="cursor: default;">
+                    <i class="reply icon"></i>
+                </a>
+            </div>
+
+            <div>
+                <button style="cursor: default" class="ui teal button">Permisos</button>
+            </div>
+        
+            <h5>Historial de solicitudes</h5>
+            <br>                    
+            <p style="font-size:14px">A través de esta apartado podrá visualizar los proceso relacionados a sus Solicitudes de Permisos </p>
+    
+            <br>
+
+            <table class="ui blue table">
+                <thead>
+                    <tr>
+                        <th>Fecha solicitud</th>
+                        <th>Tipo de permiso</th>
+                        <!--<th>Motivo del permiso</th>-->
+                        <th>Fecha - Horas</th>
+                        <th>Respuesta</th>
+                        <th>Abrir</th>
+
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for p in permisos %}
+                
+                    <tr>
+                        <td>{{ p.Datetime_create }}</td>
+                        <td>{{ p.tipo }}</td>
+                        <!--<td>{{ p.motivo }}</td>-->
+                        <td>
+                            {% for fecha_hora in p.fechaHora.horas_fechas %}
+                                Fecha: {{ fecha_hora.fecha }} &nbsp;&nbsp; Desde: {{ fecha_hora.hora_inicio }} &nbsp;&nbsp; Hasta: {{ fecha_hora.hora_fin }}<br>
+                            {% endfor %}
+                        </td>
+                        <td>{{ p.respuesta }}</td>
+                        <td>
+                            <a href="{% url 'ver_permisos_uf' p.id %}"><i class="external alternate icon"></i></a>
+                        </td>
+                    </tr>
+    
+                    {% endfor %}
+    
+                </tbody>
+    
+            </table>
+
+                 
+
+            
+        </div>
+        </center>
+    
+
+</div>
+
+
+{% include 'Inc/pie2.html'  %}

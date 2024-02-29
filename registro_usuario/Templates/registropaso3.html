@@ -1,0 +1,233 @@
+{% include 'Inc/header1.html'  %}
+{% load static %}
+
+
+
+<div class="todo_el_contenedor" id="todo_el_contenedor_paso3">
+    <div class="ui segment">
+      <h3 class="ui left floated header">Registrarse</h3>
+      <h3 class="ui right floated header">Paso 3</h3>
+      <br><br><br>
+      <div>Crea una cuenta para acceder a los servicios de Human Talent Management</div>
+      <div class="ui clearing divider"></div> <!--Linea de division-->
+  
+      <!--formulario-->
+        
+      <form  name="formulario" id="formulario" method="POST"  action="">
+
+        {% csrf_token %}
+        {% for e in unempleado %}
+
+
+          <div style="margin-left: 50px;">
+            <label for=""><b> Nombre:</b> {{e.nombre}} </label><br>
+            <label for=""><b>Apellido:</b> {{e.apellido}} </label><br>
+            <label for=""><b>Tipo de documento:</b> {{e.tipo_documento}}</label><br>
+            <label for=""><b>Documento:</b> {{e.documento}} </label><br>
+            <label for=""><b>Cargo:</b> {{e.cargo}}</label><br>
+            <label for=""><b>Area:</b> {{e.area}}</label><br>
+          </div>
+
+            <br><br>
+
+        <div class="formulario">
+          
+        
+          <!-- Grupo: Nombre -->
+          <div class="formulario__grupo" id="grupo__nombre" hidden>
+            <label for="nombre" class="formulario__label">Nombre</label>
+            <div class="formulario__grupo-input">
+              <input type="text" type="hidden" class="formulario__input" name="nombre" id="nombre" placeholder="Nombre completo"  required  value = "{{ e.nombre }}" readonly>
+            </div>
+          </div>
+  
+          <!-- Grupo: Apellido -->
+          <div class="formulario__grupo" id="grupo__apellido" hidden>
+            <label for="apellido" class="formulario__label">Apellido</label>
+            <div class="formulario__grupo-input">
+              <input type="text" class="formulario__input" name="apellido" id="apellido" placeholder="Apellido completo"  required  value = "{{ e.apellido }}" readonly>
+            </div>
+          </div>
+  
+          
+          <!-- Grupo: lista -->
+          <div class="formulario__grupo" id="grupo__lista" hidden>
+            <label for="lista" class="formulario__label">Tipo de documento</label>
+            <div class="formulario__grupo-input">
+              <select  required class="ui search dropdown, formulario__input" name="lista" id="lista">
+                <option>{{e.tipo_documento}}</option>
+              </select>
+            </div>
+          </div>
+  
+  
+          <!-- Grupo: numero -->
+          <div class="formulario__grupo" id="grupo__numero" hidden>
+            <label for="numero" class="formulario__label">Número de documento de identidad</label>
+            <div class="formulario__grupo-input">
+              <input type="text" class="formulario__input" name="numero" id="numero" placeholder="Número de documento de identidad"  required value = "{{ e.documento }}" readonly>
+            </div>
+          </div>
+
+           <!-- Grupo: fecha -->
+           <div class="formulario__grupo" id="grupo__fecha" hidden>
+            <label for="fecha" class="formulario__label">Fecha de nacimiento</label>
+            <div class="formulario__grupo-input">
+              <input type="text" class="formulario__input" name="fecha" id="fecha" required value="{{ e.fecha_nacimiento|date:'Y-m-d' }}"
+              readonly>
+            </div>
+          </div>
+
+        
+          <!-- Grupo: Se llama el correo electrónico  -->
+          <div hidden>
+            <label for="nombre" class="formulario__label">Correo electronico</label>
+            <div class="formulario__grupo-input">
+              <input type="text" class="formulario__input"  name="correo2" value="{{ correo }}" readonly>
+            </div>
+          </div>
+
+          <!-- Grupo: eps -->
+          <div class="formulario__grupo" id="grupo__edad" hidden>
+            <label for="edad" class="formulario__label">EPS</label>
+            <div class="formulario__grupo-input">
+              <input type="text" class="formulario__input" name="eps" id="eps" placeholder="Ingrese su edad" value="{{ e.eps}}" readonly>
+            </div>
+          </div>
+          
+
+          <!-- Grupo: cargo -->
+          <div class="formulario__grupo" id="grupo__fecha" hidden>
+            <label for="fecha" class="formulario__label">Cargo</label>
+            <div class="formulario__grupo-input">
+              <input type="text" class="formulario__input" name="cargo" id="cargo" required value = "{{ e.cargo }}" readonly>
+            </div>
+          </div>  
+
+           <!-- Grupo: cargo -->
+           <div class="formulario__grupo" id="grupo__fecha" hidden>
+            <label for="fecha" class="formulario__label">Area</label>
+            <div class="formulario__grupo-input">
+              <input type="text" class="formulario__input" name="area" id="area" required value = "{{ e.area }}" readonly>
+            </div>
+          </div> 
+  
+
+          <!--   INGRESO DE DATOS -->
+
+          <!-- Grupo: numeroCelular-->
+          <div class="formulario__grupo" id="grupo__numeroCelular">
+            <label for="numeroCelular" class="formulario__label">Número de celular</label>
+            <div class="formulario__grupo-input">
+              <input type="text" class="formulario__input" name="numeroCelular" id="numeroCelular" placeholder="Número de celular"  required>
+              <i class="formulario__validacion-estado fas fa-times-circle"></i>
+            </div>
+            <p class="formulario__input-error">El numero de celuar solo puede contener numeros y el maximo son 20 dígitos.</p>
+          </div>
+  
+          <!-- Grupo: numeroTelefono-->
+          <div class="formulario__grupo" id="grupo__numeroTelefono">
+            <label for="numeroTelefono" class="formulario__label">Teléfono</label>
+            <div class="formulario__grupo-input">
+              <input type="text" class="formulario__input" name="numeroTelefono" id="numeroTelefono" placeholder="Número de Teléfono"  required>
+              <i class="formulario__validacion-estado fas fa-times-circle"></i>
+            </div>
+            <p class="formulario__input-error">El numero de celuar solo puede contener numeros y el maximo son 20 dígitos.</p>
+          </div>
+  
+          <!-- Grupo: contraseñas -->
+          <div class="formulario__grupo" id="grupo__password">
+            <label for="password" class="formulario__label">Contraseña</label>
+            <div class="formulario__grupo-input">
+              <input type="password" class="formulario__input" name="password" id="password" placeholder="Contraseña" required>
+              <i class="formulario__validacion-estado fas fa-times-circle"></i>
+            </div>
+            <p class="formulario__input-error">Las contraseñas pueden contener letras, números, puntos y guiones</p>
+          </div>
+  
+          <div class="formulario__grupo" id="grupo__password2">
+            <label for="password2" class="formulario__label">Confirme su contraseña</label>
+            <div class="formulario__grupo-input">
+              <input type="password" class="formulario__input" name="password2" id="password2" placeholder="Confirme contraseña" required>
+              <i class="formulario__validacion-estado fas fa-times-circle"></i>
+            </div>
+            <p class="formulario__input-error">Las contraseñas deben ser iguales</p>
+          </div>
+  
+          <!-- Grupo: edad -->
+          <div class="formulario__grupo" id="grupo__edad">
+            <label for="edad" class="formulario__label">Edad</label>
+            <div class="formulario__grupo-input">
+              <input type="text" class="formulario__input" name="edad" id="edad" placeholder="Ingrese su edad"  required>
+              <i class="formulario__validacion-estado fas fa-times-circle"></i>
+            </div>
+            <p class="formulario__input-error">Introduce una edad válida</p>
+          </div>
+  
+          <!-- Grupo: genero -->
+          <div class="formulario__grupo" id="grupo__listaU">
+            <label for="listaU" class="formulario__label">Género</label>
+            <div class="formulario__grupo-input">
+              <select  required class="ui search dropdown formulario__input" name="genero" id="listaU">
+                <option value="">Seleccione  una opción</option>
+                <option value="F">Femenino</option>
+                <option value="M">Masculino</option>
+                <option value="otro">OTRO</option>
+              </select>
+              <i class="formulario__validacion-estado fas fa-times-circle"></i>
+            </div>
+            <p class="formulario__input-error"> Por favor, selecciona una opción.</p>
+          </div>
+          
+          
+
+          <!-- Grupo: Terminos y Condiciones -->
+          <div class="formulario__grupo" id="grupo__terminos">
+            <label class="formulario__label">
+              <input class="formulario__checkbox" type="checkbox" name="terminos" id="terminos"  required>
+              Acepto los Terminos y Condiciones
+            </label>
+          </div>
+  
+          <br>
+  
+          <div class="formulario__mensaje" id="formulario__mensaje">
+              <p><i class="fas fa-exclamation-triangle"></i> <b>Error:</b> Por favor rellena el formulario correctamente. </p>
+          </div>
+  
+
+          {% endfor %}
+
+  
+        </div>
+
+        <!--Botón-->
+        <center>
+          <div class="formulario__grupo formulario__grupo-btn-enviar">  
+            <button class="ui teal circular button" type="submit" value="Registrar" name="registro" id="continuar">
+              Guardar
+            </button>            
+          </div>
+        </center>
+
+        <div class="formulario__mensaje" id="formulario__mensaje">
+          <p style="font-size: 8px"><i class="fas fa-exclamation-triangle"></i> <b>Error:</b> Por favor rellena el formulario correctamente. </p>
+        </div>
+  
+        <br><br>
+  
+    
+      </form> 
+  
+    </div>
+  </div>
+  
+  
+  
+  
+  <script src="{% static 'Js/copia.js' %}"></script>
+  <script src="https://kit.fontawesome.com/2c36e9b7b1.js" crossorigin="anonymous"></script> 
+  
+  
+  </body>
+  </html>

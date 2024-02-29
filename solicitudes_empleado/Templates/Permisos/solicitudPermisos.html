@@ -1,0 +1,654 @@
+<!-- solicitudPermisos.html -->
+
+{% include 'Inc/header2.html' %}
+
+{% load static %}
+
+
+<div class="ui container" style="background-color: white">
+
+  <br>
+
+  <a class="ui teal icon button" href="/permisosUF" style="cursor: default;">
+    <i class="reply icon"></i>
+  </a>
+
+  <div>
+    <button style="cursor: default;" class="ui teal button" id="boton_permisos">Permisos</button>
+  </div>
+
+  <br><br>
+  <div style="text-align:center; margin-left: 7%; margin-right:7%">
+
+    <h5>Realizar solicitud</h5>
+
+    <div class="ui container">
+      <form class="ui form" action="" method="POST" enctype="multipart/form-data">
+        <br>
+
+        {% csrf_token %}
+
+        <!--  Tipo y motivo del permiso -->
+        <div class="three fields">
+          <div class="field">
+            <label>
+              <font style="vertical-align: inherit;">
+                <font style="vertical-align: inherit;">Tipo de permiso</font>
+              </font>
+            </label>
+            <select name="motivoprefix" id="motivoprefix" onchange="showInp()" required>
+              <option value="prefix" disabled selected>Seleccione una opción</option>
+              <option value="medico">Médico</option>
+              <option value="obligacionespersonales">Obligaciones personales</option>
+              <option value="obligacionespublicas">obligaciones públicas</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="" id="label" style="display: none" onchange="showInp()">Motivo del permiso</label>
+            <select name="selecMotivoMedico" id="selecMedico" onchange="showInp(), showInp1()" style="display: none"
+              placeholder="Motivo del permiso">
+              <option value="citaMedica">Cita médica </option>
+              <option value="citaOdontologica">Cita odontológica</option>
+              <option value="procedimientoQuirurjico">Procedimiento quirúrjico</option>
+              <option value="examenMedico">Examen médico</option>
+              <option value="otro" onchange="showInp1()">Otro</option>
+            </select>
+            <select name="selecMotivoPersonal" id="selecOper" onchange="showInp(), showInp2()" style="display: none"
+              placeholder="Motivo del permiso">
+              <option value="celebracionFamiliar">Celebración familiar</option>
+              <option value="clase">Clase</option>
+              <option value="cuidadoApersonaEnferma">Cuidado a persona enferma</option>
+              <option value="calamidadDomestica">Calamidad doméstica</option>
+              <option value="otro" onchange="showInp2()">Otro</option>
+            </select>
+            <select name="selecMotivoPublico" id="selecOpub" onchange="showInp(), showInp3()" style="display: none"
+              placeholder="Motivo del permiso">
+              <option value="participacionElectoral">Participación electoral</option>
+              <option value="obluacionesX">ObligacionesX</option>
+              <option value="obligacionesY">ObligacionesY</option>
+              <option value="obligacionesZ">obligacionesZ</option>
+              <option value="otro" onchange="showInp3()">Otro</option>
+            </select>
+          </div>
+
+
+          <div class="field">
+            <label for="" onchange="showInp1(), showInp2(), showInp3()" style="display: none" id="label1">¿Cuál?</label>
+            <input type="text" id="otrot" name="otrotext" placeholder="Especifíca" style="display: none"
+              onchange="showInp1(), showInp2(), showInp3()">
+          </div>
+
+        </div>
+
+        <br>
+
+        <!--Fecha-->
+        <div class="four fields">
+          <div class="field">
+            <label>
+              <font style="vertical-align: inherit;">
+                <font style="vertical-align: inherit;">Días requeridos</font>
+              </font>
+            </label>
+            <select name="quedias" id="quedias" onchange="showInp_Fechas()">
+              <option value="ninguno">Seleccione una opción</option>
+              <option value="unsolodia">Un sólo dia</option>
+              <option value="consecutivos">Varios días consecutivos</option>
+              <option value="noconsecutivos">Varios dias no consecutivos</option>
+            </select>
+            <br>
+            <button type="button" id="agregarFechaNoConsecutivos" style="display: none;"
+              onclick="agregarCampoNoConsecutivo()">Agregar fecha</button>
+            <button type="button" id="EliminarFechaNoConsecutivos" style="display: none;"
+              onclick="eliminarCampoNoConsecutivo()">Eliminar</button>
+
+          </div>
+
+          <div class="field">
+            <label for="" id="labelfecha" style="display: none" onchange="showInp_Fechas()">Titulo del label</label>
+
+            <div name="selecUnsolodia" id="selecUnsolodia" onchange="showInp_Fechas()" style="display: none">
+              <label for="fechaUnSoloDia">Fecha:</label>
+              <input type="date" id="fechaUnSoloDia" name="fechaUnSoloDia" oninput="enviarDatos()">
+              <br>
+              <label for="horaInicioUnSoloDia">Hora de inicio:</label>
+              <input type="time" id="horaInicioUnSoloDia" name="horaInicioUnSoloDia" oninput="enviarDatos()">
+              <label for="horaFinUnSoloDia">Hora de fin:</label>
+              <input type="time" id="horaFinUnSoloDia" name="horaFinUnSoloDia" oninput="enviarDatos()">
+            </div>
+
+            <div name="selecConsecutivos" id="selecConsecutivos" onchange="showInp_Fechas(), validarFechas()"
+              style="display: none">
+              <label for="">Fecha de inicio:</label>
+              <input type="date" id="fechaInicioConsecutivos">
+              <label for="">Fecha de fin:</label>
+              <input type="date" id="fechaFinConsecutivos">
+            </div>
+          </div>
+
+          <div class="field" style="display: none;" id="todosDiasMismoHorario" onchange="mostrarHorarioComun()">
+            <label>¿Todos los días en el mismo horario?</label><br>
+
+            <!-- Opción "Si" -->
+            <input type="radio" name="horarioOption" id="siHorario" value="Si">
+            <label for="siHorario">Si</label>
+
+            <!-- Opción "No" -->
+            <input type="radio" name="horarioOption" id="noHorario" value="No">
+            <label for="noHorario">No</label>
+          </div>
+
+          <div class="field" id="campoHorarioComun" style="display: none;">
+            <label for="">Hora inicio:</label>
+            <input type="time" id="fechaInicioConsecutivosComun" oninput="enviarDatos()">
+            <label for="">Hora de fin:</label>
+            <input type="time" id="fechaFinConsecutivosComun" oninput="enviarDatos()">
+          </div>
+
+        </div>
+
+
+        <div name="selecNoconsecutivos" id="selecNoconsecutivos" onchange="showInp_Fechas()" style="display: none;">
+          <div id="contenedorFechasNoConsecutivos" class="ui two column grid" style="padding: 0;"></div>
+        </div>
+
+        <br>
+
+        <div id="listaFechas" style="display: none;">
+          <label>Seleccione la hora de inicio y hora de fin de cada día:</label><br>
+          <div id="fechasSeleccionadas" name="fechasSeleccionadas" class="ui two column grid" style="padding: 0;"></div>
+        </div>
+
+        <br><br>
+
+
+        <div class="two fields">
+          <div class="field" hidden>
+            <textarea name="fechasOcultas" id="fechasOcultas" cols="30" rows="10"></textarea>
+          </div>
+        </div>
+
+
+        <!-- Archivos adjuntos -->
+        <div class="two fields">
+
+          <div class="one fields">
+            <div class="field">
+              <label for="">Archivos adjuntos</label> <br>
+              <p style="font-size: 14px">A continuación adjunte los archivos que sustenta el permiso solicitado.</p>
+              <input type="file" name="certificadoPermiso" id="">
+            </div>
+          </div>
+
+          <div class="field">
+            <label>
+              <font style="vertical-align: inherit;">
+                <font style="vertical-align: inherit;">Observaciones</font>
+              </font>
+            </label> <br>
+            <textarea rows="2" style="height: 89px;" name="observaciones"></textarea>
+          </div>
+        </div>
+
+
+        <div style="text-align: center;">
+          <button class="ui grey circular button">
+            <i class="paper plane icon"></i>
+            Enviar
+          </button>
+          <button class="ui grey circular button"  onclick="cancelarFormulario()" type="button">
+            <i class="close icon"></i>
+            Cancelar
+          </button>
+        </div>
+
+
+      </form>
+
+    </div>
+  </div>
+</div>
+
+
+<script src="js/menu_hamburguesa.js"></script>
+
+
+<script>
+
+
+    function cancelarFormulario() {
+        window.location.href = "/permisosUF/";
+    }
+
+  $('select.dropdown')
+    .dropdown()
+    ;
+  // ---  FECHAS -----
+
+  function showInp_Fechas() {
+    getSelectValue = document.getElementById("quedias").value;
+
+    document.getElementById("labelfecha").style.display = "none";
+
+    if (getSelectValue == "unsolodia") {
+      document.getElementById("labelfecha").style.display = "none";
+      document.getElementById("selecUnsolodia").style.display = "inline-block";
+      document.getElementById("selecConsecutivos").style.display = "none";
+      document.getElementById("selecNoconsecutivos").style.display = "none";
+      var contenedor = document.getElementById("contenedorFechasNoConsecutivos");
+      contenedor.innerHTML = '';
+      document.getElementById("todosDiasMismoHorario").value = "none", display = "none";
+      document.getElementById("campoHorarioComun").value = "none", display = "none";
+      document.getElementById("listaFechas").value = "none", display = "none";
+      document.getElementById("todosDiasMismoHorario").style.display = "none";
+      document.getElementById("campoHorarioComun").style.display = "none";
+      document.getElementById("listaFechas").style.display = "none";
+      document.getElementById("fechaInicioConsecutivos").value = "none";
+      document.getElementById("fechaFinConsecutivos").value = "none";
+    } else if (getSelectValue == "consecutivos") {
+      document.getElementById("labelfecha").style.display = "none";
+      document.getElementById("selecUnsolodia").style.display = "none";
+      document.getElementById("selecConsecutivos").style.display = "inline-block";
+      document.getElementById("selecNoconsecutivos").style.display = "none";
+      document.getElementById("agregarFechaNoConsecutivos").style.display = "none";
+      document.getElementById("EliminarFechaNoConsecutivos").style.display = "none";
+      document.getElementById("fechaUnSoloDia").value = "none";
+      document.getElementById("horaInicioUnSoloDia").value = "none";
+      document.getElementById("horaFinUnSoloDia").value = "none";
+      var contenedor = document.getElementById("contenedorFechasNoConsecutivos");
+      contenedor.innerHTML = '';
+    } else if (getSelectValue == "noconsecutivos") {
+      document.getElementById("labelfecha").style.display = "none";
+      document.getElementById("selecUnsolodia").style.display = "none";
+      document.getElementById("selecConsecutivos").style.display = "none";
+      document.getElementById("selecNoconsecutivos").style.display = "inline-block";
+      document.getElementById("agregarFechaNoConsecutivos").style.display = "inline-block";
+      document.getElementById("EliminarFechaNoConsecutivos").style.display = "inline-block";
+      document.getElementById("fechaUnSoloDia").value = "none";
+      document.getElementById("horaInicioUnSoloDia").value = "none";
+      document.getElementById("horaFinUnSoloDia").value = "none";
+      document.getElementById("todosDiasMismoHorario").value = "none", display = "none";
+      document.getElementById("campoHorarioComun").value = "none", display = "none";
+      document.getElementById("listaFechas").value = "none", display = "none";
+      document.getElementById("todosDiasMismoHorario").style.display = "none";
+      document.getElementById("campoHorarioComun").style.display = "none";
+      document.getElementById("listaFechas").style.display = "none";
+      document.getElementById("fechaInicioConsecutivos").value = "none";
+      document.getElementById("fechaFinConsecutivos").value = "none";
+    } else if (getSelectValue == "ninguno") {
+      document.getElementById("labelfecha").style.display = "none";
+      document.getElementById("selecUnsolodia").style.display = "none";
+      document.getElementById("selecConsecutivos").style.display = "none";
+      document.getElementById("selecNoconsecutivos").style.display = "none";
+      document.getElementById("agregarFechaNoConsecutivos").style.display = "none";
+      document.getElementById("EliminarFechaNoConsecutivos").style.display = "none";
+      document.getElementById("fechaUnSoloDia").value = "none";
+      document.getElementById("horaInicioUnSoloDia").value = "none";
+      document.getElementById("horaFinUnSoloDia").value = "none";
+      document.getElementById("todosDiasMismoHorario").value = "none", display = "none";
+      document.getElementById("campoHorarioComun").value = "none", display = "none";
+      document.getElementById("selecNoconsecutivos").value = "none", display = "none";
+      document.getElementById("listaFechas").value = "none", display = "none";
+      document.getElementById("todosDiasMismoHorario").style.display = "none";
+      document.getElementById("campoHorarioComun").style.display = "none";
+      document.getElementById("selecNoconsecutivos").style.display = "none";
+      document.getElementById("listaFechas").style.display = "none";
+      document.getElementById("fechaInicioConsecutivos").value = "none";
+      document.getElementById("fechaFinConsecutivos").value = "none";
+    }
+
+
+  }
+
+  // ------------ Dias no consecutivos ------------ 
+
+
+  // Dias Consecutivos --- ¿Mismo o diferente horario?
+  function validarFechas() {
+    var fechaInicio = document.getElementById('fechaInicioConsecutivos').value;
+    var fechaFin = document.getElementById('fechaFinConsecutivos').value;
+
+    if (fechaInicio && fechaFin) {
+      document.getElementById('todosDiasMismoHorario').style.display = "inline";
+    } else {
+      document.getElementById('todosDiasMismoHorario').style.display = "none";
+    }
+
+    enviarDatos()
+  }
+  document.getElementById('fechaInicioConsecutivos').addEventListener('change', validarFechas);
+  document.getElementById('fechaFinConsecutivos').addEventListener('change', validarFechas);
+
+
+  // Dias consecutivos ---- Mismo horario
+  function mostrarHorarioComun() {
+
+    var fechaInicio = document.getElementById('fechaInicioConsecutivos').value;
+    var fechaFin = document.getElementById('fechaFinConsecutivos').value;
+    var radioSi = document.getElementById('siHorario');
+    var radioNo = document.getElementById('noHorario')
+    var campoHorarioComun = document.getElementById('campoHorarioComun');
+
+    if (radioSi.checked) {
+      document.getElementById('campoHorarioComun').style.display = "inline";
+    } else {
+      document.getElementById('campoHorarioComun').style.display = "none";
+    }
+
+    if (radioNo.checked) {
+      document.getElementById('listaFechas').style.display = "inline";
+      var fechasIntermedias = obtenerFechasIntermedias(new Date(fechaInicio), new Date(fechaFin));
+      mostrarFechasIntermedias(fechasIntermedias);
+
+      document.getElementById("fechaInicioConsecutivosComun").value = "none";
+      document.getElementById("fechaFinConsecutivosComun").value = "none";
+
+
+
+    } else {
+      document.getElementById('listaFechas').style.display = "none";
+    }
+  }
+
+  // Dias consecutivos ---  Diferente horario
+
+  function obtenerFechasIntermedias(fechaInicio, fechaFin) {
+    var fechas = [];
+    console.log(fechas)
+
+    var fechaInicio2 = new Date(fechaInicio);
+    fechaInicio2.setDate(fechaInicio2.getDate() + 1);
+
+    var fechaTemp = new Date(fechaInicio2);
+    fechaTemp.setHours(0, 0, 0, 0);
+
+    var fechaFin2 = new Date(fechaFin);
+    fechaFin2.setDate(fechaFin2.getDate() + 1);
+
+    fechaFin2.setHours(0, 0, 0, 0);
+
+    while (fechaTemp <= fechaFin2) {
+      fechas.push(new Date(fechaTemp));
+      var siguienteDia = fechaTemp.getDate() + 1;
+      fechaTemp.setDate(siguienteDia);
+    }
+
+    return fechas;
+  }
+
+
+  // Calcular fechas intermedias
+  function mostrarFechasIntermedias(fechas) {
+    var listaFechasDiv = document.getElementById('fechasSeleccionadas');
+    listaFechasDiv.innerHTML = '';
+
+    fechas.forEach(function (fecha) {
+      var divFechaHora = document.createElement('div');
+      divFechaHora.classList.add('field', 'column');
+
+      var labelFecha = document.createElement('label');
+      labelFecha.textContent = obtenerFechaFormateada(fecha);
+      divFechaHora.appendChild(labelFecha);
+
+      var inputHoraInicio = document.createElement('input');
+      inputHoraInicio.type = 'time';
+      inputHoraInicio.id = 'horaInicio_' + fecha.getTime();
+      inputHoraInicio.name = 'horaInicio_' + fecha.getTime();
+      inputHoraInicio.oninput = function () {
+        var horaInicio = inputHoraInicio.value;
+        var horaFin = document.getElementById(`horaFin_${fecha.getTime()}`).value;
+        enviarDatos();
+      };
+      divFechaHora.appendChild(inputHoraInicio);
+
+      var inputHoraFin = document.createElement('input');
+      inputHoraFin.type = 'time';
+      inputHoraFin.id = 'horaFin_' + fecha.getTime();
+      inputHoraFin.name = 'horaFin_' + fecha.getTime();
+      inputHoraFin.oninput = function () {
+        var horaInicio = document.getElementById(`horaInicio_${fecha.getTime()}`).value;
+        var horaFin = inputHoraFin.value;
+        enviarDatos();
+      };
+      divFechaHora.appendChild(inputHoraFin);
+
+      listaFechasDiv.appendChild(divFechaHora);
+    });
+
+    document.getElementById('listaFechas').style.display = 'inline-block';
+  }
+
+  function obtenerFechaFormateada(fecha) {
+    var options = { year: 'numeric', month: 'numeric', day: '2-digit' };
+    var fechaFormateada = fecha.toLocaleDateString('es-ES', options);
+
+    // Asegurémonos de que la fecha esté en el formato AAAA/MM/DD
+    var partesFecha = fechaFormateada.split('/');
+    if (partesFecha.length === 3) {
+        fechaFormateada = partesFecha[2] + '-' + partesFecha[1] + '-' + partesFecha[0];
+    }
+
+    return fechaFormateada;
+}
+
+
+
+  
+  // pa recalcular los días intermedios
+  var fechaInicioInput = document.getElementById('fechaInicioConsecutivos');
+  var fechaFinInput = document.getElementById('fechaFinConsecutivos');
+
+  fechaInicioInput.addEventListener('change', recalcularFechasIntermedias);
+  fechaFinInput.addEventListener('change', recalcularFechasIntermedias);
+
+  function recalcularFechasIntermedias() {
+    var fechaInicio = fechaInicioInput.value;
+    var fechaFin = fechaFinInput.value;
+    var radioNo = document.getElementById('noHorario')
+
+    if (fechaInicio && fechaFin && radioNo.checked) {
+      var fechasIntermedias = obtenerFechasIntermedias(new Date(fechaInicio), new Date(fechaFin));
+      mostrarFechasIntermedias(fechasIntermedias);
+    }
+  }
+
+
+
+  // ------------ Dias no consecutivos ------------- 
+
+
+  var contadorCamposNoConsecutivos = 0;
+
+  function agregarCampoNoConsecutivo() {
+    contadorCamposNoConsecutivos++;
+
+    var contenedor = document.getElementById('contenedorFechasNoConsecutivos');
+
+    var nuevoCampo = document.createElement('div');
+    nuevoCampo.className = 'ui column';
+    nuevoCampo.innerHTML = `
+                <label for="fechaNoConsecutivos_${contadorCamposNoConsecutivos}">Fecha:</label>
+                <input type="date" id="fechaNoConsecutivos_${contadorCamposNoConsecutivos}" name="fechasNoConsecutivos[]" oninput="enviarDatos()">
+                <label for="horaInicioNoConsecutivo_${contadorCamposNoConsecutivos}">Hora inicio:</label>
+                <input type="time" id="horaInicioNoConsecutivo_${contadorCamposNoConsecutivos}" name="horasInicioNoConsecutivos[]" oninput="enviarDatos()">
+                <label for="horaFinNoConsecutivo_${contadorCamposNoConsecutivos}">Hora fin:</label>
+                <input type="time" id="horaFinNoConsecutivo_${contadorCamposNoConsecutivos}" name="horasFinNoConsecutivos[]" oninput="enviarDatos()">
+            `;
+
+    contenedor.appendChild(nuevoCampo);
+  }
+
+  var contenedorFechasNoConsecutivos = document.getElementById('contenedorFechasNoConsecutivos');
+  contenedorFechasNoConsecutivos.style.display = 'inline-block';
+
+
+  function eliminarCampoNoConsecutivo() {
+    var contenedor = document.getElementById('contenedorFechasNoConsecutivos');
+
+    if (contadorCamposNoConsecutivos > 0) {
+      contenedor.removeChild(contenedor.lastChild);
+      contadorCamposNoConsecutivos--;
+    }
+
+    enviarDatos()
+  }
+
+
+
+  //  ----------------   ENVIO DE DATOS DE FECHAS --------------
+
+  function enviarDatos() {
+    var horasFechas = [];
+    var tipo = document.getElementById("quedias").value;
+
+    if (tipo == 'noconsecutivos') {
+
+      for (var i = 1; i <= contadorCamposNoConsecutivos; i++) {
+        var fecha = document.getElementById(`fechaNoConsecutivos_${i}`).value;
+        var horaInicio = document.getElementById(`horaInicioNoConsecutivo_${i}`).value;
+        var horaFin = document.getElementById(`horaFinNoConsecutivo_${i}`).value;
+
+        horasFechas.push({ fecha: fecha, hora_inicio: horaInicio, hora_fin: horaFin });
+      }
+    }
+
+    else if (tipo == 'consecutivos') {
+
+      var radioSi = document.getElementById('siHorario');
+      var radioNo = document.getElementById('noHorario');
+
+      var fechasIntermedias = obtenerFechasIntermedias(document.getElementById('fechaInicioConsecutivos').value, document.getElementById('fechaFinConsecutivos').value);
+
+
+      if (radioSi.checked) {
+
+        fechasIntermedias.forEach(function (fecha) {
+          var horaInicio = document.getElementById("fechaInicioConsecutivosComun").value;
+          var horaFin = document.getElementById("fechaFinConsecutivosComun").value;
+          fecha = obtenerFechaFormateada(fecha)
+
+
+          horasFechas.push({ fecha: fecha, hora_inicio: horaInicio, hora_fin: horaFin });
+        });
+
+
+      } else if (radioNo.checked) {
+
+        fechasIntermedias.forEach(function (fecha) {
+          var horaInicio = document.getElementById(`horaInicio_${fecha.getTime()}`).value;
+          var horaFin = document.getElementById(`horaFin_${fecha.getTime()}`).value;
+          fecha = obtenerFechaFormateada(fecha)
+
+
+          horasFechas.push({ fecha: fecha, hora_inicio: horaInicio, hora_fin: horaFin });
+        });
+      }
+    }
+
+    else if (tipo == 'unsolodia') {
+      var fecha = document.getElementById("fechaUnSoloDia").value;
+      var horaInicio = document.getElementById("horaInicioUnSoloDia").value;
+      var horaFin = document.getElementById("horaFinUnSoloDia").value;
+
+      horasFechas.push({ fecha: fecha, hora_inicio: horaInicio, hora_fin: horaFin });
+
+    }
+
+    var datos = {
+      horas_fechas: horasFechas
+    };
+
+    document.getElementById('fechasOcultas').value = JSON.stringify(datos);
+  }
+
+
+
+  // -------  TIPO Y MOTIVO DE PERMISOS  ---------
+
+
+  function showInp() {
+    getSelectValue = document.getElementById("motivoprefix").value;
+
+    document.getElementById("label").style.display = "none";
+
+
+    if (getSelectValue == "medico") {
+      document.getElementById("label").style.display = "inline-block";
+      document.getElementById("selecMedico").style.display = "inline-block";
+      document.getElementById("selecOper").style.display = "none";
+      document.getElementById("selecOpub").style.display = "none";
+    } else if (getSelectValue == "obligacionespersonales") {
+      document.getElementById("label").style.display = "inline-block";
+      document.getElementById("selecMedico").style.display = "none";
+      document.getElementById("selecOper").style.display = "inline-block";
+      document.getElementById("selecOpub").style.display = "none";
+    } else if (getSelectValue == "obligacionespublicas") {
+      document.getElementById("label").style.display = "inline-block";
+      document.getElementById("selecMedico").style.display = "none";
+      document.getElementById("selecOper").style.display = "none";
+      document.getElementById("selecOpub").style.display = "inline-block";
+    } else if (getSelectValue == "prefix_tipo") {
+      document.getElementById("label").style.display = "none";
+      document.getElementById("selecMedico").style.display = "none";
+      document.getElementById("selecOper").style.display = "none";
+      document.getElementById("selecOpub").style.display = "none";
+      document.getElementById("label1").style.display = "none";
+      document.getElementById("otrot").style.display = "none";
+    }
+  }
+
+
+
+  function showInp1() {
+    var getSelectValue = document.getElementById("selecMedico").value;
+
+    switch (getSelectValue) {
+      case "otro":
+        document.getElementById("label1").style.display = "inline-block";
+        document.getElementById("otrot").style.display = "inline-block";
+        document.getElementById("otrot").setAttribute("required", "required");
+        break;
+    }
+  }
+
+  function showInp2() {
+    var getSelectValue = document.getElementById("selecOper").value;
+
+    switch (getSelectValue) {
+      case "otro":
+        document.getElementById("label1").style.display = "inline-block";
+        document.getElementById("otrot").style.display = "inline-block";
+        document.getElementById("otrot").setAttribute("required", "required");
+        break;
+    }
+  }
+
+  function showInp3() {
+    var getSelectValue = document.getElementById("selecOpub").value;
+
+    switch (getSelectValue) {
+      case "otro":
+        document.getElementById("label1").style.display = "inline-block";
+        document.getElementById("otrot").style.display = "inline-block";
+        document.getElementById("otrot").setAttribute("required", "required");
+        break;
+    }
+  }
+
+  function showInp4() {
+    var getSelectValue = document.getElementById("diasRequeridos").value;
+
+    switch (getSelectValue) {
+      case "unDia":
+        document.getElementById("unDiaInsertar").style.display = "inline-block";
+        document.getElementById("unDiaInsertar").setAttribute("required", "required");
+        break;
+    }
+  }
+
+</script>
+
+
+{% include 'Inc/pie2.html'%}
+

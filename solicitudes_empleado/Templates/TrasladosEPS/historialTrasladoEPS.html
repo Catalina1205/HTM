@@ -1,0 +1,79 @@
+{% include 'Inc/header2.html' %}
+{% load static %}
+
+<div class="ui container" style="background-color: white; width:100%"> 
+
+    <center>    
+        <br><br>
+
+        <div style="text-align: left;">    
+            <a class="ui teal icon button" href="/trasladoEPSUF" style="cursor: default;">
+                <i class="reply icon"></i>
+            </a>
+        </div>
+                        
+        <div>
+            <button style="cursor: default" class="ui teal button">Traslado de EPS</button>
+        </div>
+    
+        <h5>Historial de solicitudes</h5>
+                            
+        <p style="font-size: 14px"  >A través de esta apartado podrá visualizar los proceso relacionados a sus Solicitudes de traslado de EPS </p>
+
+    
+        <br>
+
+        <table class="ui blue table">
+            <thead>
+                <tr>
+                    <th>Fecha solicitud</th>
+                    <th>EPS destino</th>
+                    <th>EPS actual</th>
+                    <th>Respuesta</th>  
+                    <th>Abrir</th>  
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for t in traslados %}
+            
+                <tr>
+                    <td>{{ t.1 }}</td>
+                    <td>{{ t.4 }}</td>
+                    <td>{{ t.5 }}</td>
+                    <td>{{ t.6 }}</td>
+                    <td>
+                        <a href="{% url 'ver_traslado_eps_uf' t.0 %}"><i class="external alternate icon"></i></a>
+                    </td>                    </td>
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+        </table>
+    
+
+    
+        <script>
+            function borrar(id){
+                var respuesta = confirm("Desea borrar el registro número: " + id)
+                if (respuesta){
+                    location.href = "/borrartraslado/" + id
+                }
+                else {
+                    alert("El registro no se va a borrar, está a salvo")
+                }
+            }
+
+        </script>
+    
+    </center>
+
+</div>
+
+
+
+
+
+{% include 'Inc/pie2.html' %}
